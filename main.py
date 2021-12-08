@@ -5,10 +5,10 @@ def get_longest_sorted_asc(lst: list[int]) -> list[int]:
     maxi = 0
     lungime = len(lst)
     for i in range(lungime):
-        if maxi < contor:
+        if maxi <= contor:
             maxi = contor
             lst_ret = aux
-        if lst[i] > x:
+        if lst[i] >= x:
             x = lst[i]
             contor += 1
             aux.append(int(x))
@@ -18,11 +18,11 @@ def get_longest_sorted_asc(lst: list[int]) -> list[int]:
     return lst_ret
 
 
-# def test_get_longest_sorted_asc():
-#      assert get_longest_sorted_asc()
-#      assert get_longest_sorted_asc()
-#      assert get_longest_sorted_asc()
-#      assert get_longest_sorted_asc()
+def test_get_longest_sorted_asc():
+     assert get_longest_sorted_asc([1, 2, 3, 4, 1, 2, 4, 5, 6, 7]) == [1, 2, 3, 4]
+     assert get_longest_sorted_asc([2012, 2011, 2010, 2, 2, 3]) == [2, 2, 3]
+     assert get_longest_sorted_asc()
+     assert get_longest_sorted_asc()
 
 # def get_longest_equal_int_real(lst: list[float]) -> list[float]:
 #
@@ -45,7 +45,7 @@ def get_longest_sorted_asc(lst: list[int]) -> list[int]:
 def citire_lista():
     lista = []
     lista_string = input('Tastați lista: ')
-    len_lista = lista_string.split(' ')
+    len_lista = lista_string.split(',')
     for x in len_lista:
         lista.append(float(x))
     return(lista)
