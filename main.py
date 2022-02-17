@@ -1,87 +1,157 @@
-def get_longest_sorted_asc(lst: list[int]) -> list[int]:
-    aux = []
-    x = 0
-    contor = 0
-    maxi = 0
-    lungime = len(lst)
-    for i in range(lungime):
-        if maxi <= contor:
-            maxi = contor
-            lst_ret = aux
-        if lst[i] >= x:
-            x = lst[i]
-            contor += 1
-            aux.append(int(x))
-        else:
-            contor = 0
-            aux = []
-    return lst_ret
+def is_prime(n):
+    '''
+    :param n: se va verifica daca n este prim
+    :return: 1 daca n este prim ,0 in caz contrar
+    '''
+    if n < 2:
+        return 0
+    elif n == 2:
+        return 1
+    elif n % 2 == 0:
+        return 0
+    else:
+        for i in range(3, n, 2):
+            if n % i == 0:
+                return 0
+    return 1
+
+def is_all_prime(l):
+    '''
+    determina daca toate elementele date sunt prime sau nu
+    '''
+    for i in l :
+        if is_prime(i) == 0 :
+            return  False
+    return True
+
+def test_get_longest_all_primes ():
+    assert get_longest_all_primes([2 , 3 , 7 , 11]) == [2 , 3 , 7 , 11]
+    assert get_longest_all_primes([2 , 2 , 7 , 23]) == [2 , 2 , 7 ,23]
+    assert get_longest_all_primes([1 , 3 , 3 , 7]) == [3 , 3 ,7]
+    assert get_longest_all_primes([1 , 1 , 0 , 1 ]) == []
+
+def get_longest_all_primes(l):
+    '''
+    determina cea mai lunga segventa de numnere prime din vectorul dat
+    '''
+    subsecventa_max = []
+    for i in range(len(l)):
+        for j in range(i , len(l)+1):
+            if(is_all_prime(l[i:j+1])) and len(l[i:j+1]) > len(subsecventa_max):
+                subsecventa_max = l[i:j+1]
+    return subsecventa_max
+
+def test_get_longest_prime_digits():
+    assert get_longest_prime_digits([2 , 2 , 2 , 3]) == [2 , 2 , 2 , 3]
+    assert get_longest_prime_digits([1 , 2 , 7 , 9]) == [2 , 7]
+    assert get_longest_prime_digits([2 , 2 , 7 , 5]) == [2 , 2 , 7 , 5]
+    assert get_longest_prime_digits([1 , 3 , 5 , 7]) == [3 , 5 ,7]
 
 
-def test_get_longest_sorted_asc():
-     assert get_longest_sorted_asc([1, 2, 3, 4, 1, 2, 4, 5, 6, 7]) == [1, 2, 3, 4]
-     assert get_longest_sorted_asc([2012, 2011, 2010, 2, 2, 3]) == [2, 2, 3]
-     assert get_longest_sorted_asc()
-     assert get_longest_sorted_asc()
-
-# def get_longest_equal_int_real(lst: list[float]) -> list[float]:
-#
-#
-# def test_get_longest_equal_int_real():
-#      assert get_longest_equal_int_real()
-#      assert get_longest_equal_int_real()
-#      assert get_longest_equal_int_real()
-#      assert get_longest_equal_int_real()
+def au_toate_cifrele_prime(n) :
+    while n != 0 :
+        c = n % 10
+        if is_prime(c) == 0 :
+            return False
+        n = n // 10
+    return True
 
 
-# def get_longest_powers_of_k(lst: list[int], k: int) -> list[int]:
+def sunt_bune(l) :
+    '''
+    verifica daca toate numerele din secventa data au toate cifrele pare
+    :param l:
+    :return:
+    '''
+    for i in l :
+        if au_toate_cifrele_prime(i) == 0 :
+            return 0
+    return 1
 
-# def test_get_longest_powers_of_k()
-#     assert get_longest_powers_of_k()
-#     assert get_longest_powers_of_k()
-#     assert get_longest_powers_of_k()
-#     assert get_longest_powers_of_k()
-#
+
+def get_longest_prime_digits(l):
+    '''
+    determina cea mai lunga secventa de numere a caror tuturor cifre sunt prime
+    :param l:
+    :return: cea mai lunga secventa de numere a caror tuturor cifre sunt prime
+    '''
+    subsecventa_max = []
+    for i in range(len(l)):
+        for j in range(i , len(l)+1):
+            if (sunt_bune(l[i:j + 1])) and len(l[i:j + 1]) > len(subsecventa_max):
+                subsecventa_max = l[i:j + 1]
+    return subsecventa_max
+
+
 def citire_lista():
-    lista = []
-    lista_string = input('Tastați lista: ')
-    len_lista = lista_string.split(',')
-    for x in len_lista:
-        lista.append(float(x))
-    return(lista)
+    l = []
+    listasstring = input("Dati lista ")
+    numberasstring = listasstring.split(",")
+    for x in numberasstring:
+        l.append(int(x))
+    return l
 
 
-def menu():
+def pare(l):
+    '''
+    determina daca toate numerele din secventa sunt pare
+    :return:
+    '''
+    c = 0
+    for i in l :
+        if i % 2 == 1 :
+            return 0
+    return 1
+
+
+def get_longest_all_even(l):
+    '''
+    :return: cea mai lunga secventa de numere pare
+    '''
+    subsecventa_max = []
+    for i in range(len(l)):
+        for j in range(i, len(l) + 1):
+            if (pare(l[i:j + 1])) and len(l[i:j + 1]) > len(subsecventa_max):
+                subsecventa_max = l[i:j + 1]
+    return subsecventa_max
+
+
+def test_get_longest_all_even():
+    assert get_longest_all_even([ 2 , 4 , 6 ,22 , 3]) == [2 , 4 , 6 ,22]
+    assert get_longest_all_even([4 , 6 ,23 , 1 , 1]) == [4 , 6]
+    assert get_longest_all_even([3 , 1]) == []
+    assert get_longest_all_even([22 , 24 , 88 , 54 , 24 , 56]) == [22 , 24 , 88 , 54 , 24 , 56]
+
+
+def print_menu():
     print('''
-    1 -> Citire listă.
-    2 -> Determinare cea mai lungă subsecvență cu proprietatea că numerele sunt ordonate crescător.
-    3 -> Determinare cea mai lungă subsecvență cu proprietatea că toate numerele au partea întreagă egală cu partea fracționară.
-    4 -> Determinare cea mai lungă subsecvență cu proprietatea că toate numerele au partea întreagă egală cu partea fracționară.
-    x -> Ieșire.
-    ''')
+    1. Citire lista
+    2. Afisare cea mai lunga secventa de numere prime")
+    3. Afisare cea mai lunga secventa de numere ale caror cifre sunt prime")
+    4. Afisare cea mai lunga secventa de numere pare")
+    5. Iesire''')
 
 
 def main():
-    # test_get_longest_sorted_asc()
-    # test_get_longest_equal_int_real()
+    test_get_longest_all_primes()
+    test_get_longest_prime_digits()
+    test_get_longest_all_even()
+    l = []
     while True:
-        menu()
-        optiune = input('Alegeți una dintre opțiunile de mai sus: ')
+        print_menu()
+        optiune = input('Dati optiunea: ')
         if optiune == '1':
             l = citire_lista()
         elif optiune == '2':
-            print(f'Cea mai lungă secvență de numere ordonate crescător este: {get_longest_sorted_asc(l)}.')
+            print(get_longest_all_primes(l))
         elif optiune == '3':
-            print(
-                f'Cea mai lungă secvență de numere cu partea întreagă egală cu cea fracționară este: {get_longest_equal_int_real(l)}.')
+            print(get_longest_prime_digits(l))
         elif optiune == '4':
-            print(
-                f'Cea mai lungă secvență de numere se pot scrie ca x**k, k citit, x întreg pozitiv este: {get_longest_powers_of_k(l)}.')
-        elif optiune == 'x':
+            print(get_longest_all_even(l))
+        elif optiune == '5' :
             break
-        else:
-            print('Opțiune greșită! Reîncercați: ')
-
+        else  :
+            print('Optiune gresita! Reincercati: ')
 
 if __name__ == '__main__':
     main()
